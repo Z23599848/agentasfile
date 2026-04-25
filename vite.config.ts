@@ -45,6 +45,23 @@ export default defineConfig({
                 res.end(JSON.stringify({ error: 'Failed to save data' }));
               }
             });
+          } else if (req.url === '/api/save-mcp' && req.method === 'POST') {
+            let body = '';
+            req.on('data', chunk => {
+              body += chunk.toString();
+            });
+            req.on('end', () => {
+              try {
+                const data = JSON.parse(body);
+                const filePath = path.resolve(__dirname, 'public/mcp_servers.json');
+                fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+                res.statusCode = 200;
+                res.end(JSON.stringify({ message: 'Saved successfully' }));
+              } catch (err) {
+                res.statusCode = 500;
+                res.end(JSON.stringify({ error: 'Failed to save data' }));
+              }
+            });
           } else {
             next();
           }

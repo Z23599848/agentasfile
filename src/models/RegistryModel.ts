@@ -37,6 +37,28 @@ export class RegistryModel {
     return this.mcpConfig;
   }
 
+  addMcpServer(name: string, info: { command: string, args: string[] }) {
+    this.mcpConfig.mcpServers[name] = info;
+    this.notify();
+  }
+
+  removeMcpServer(name: string) {
+    delete this.mcpConfig.mcpServers[name];
+    this.notify();
+  }
+
+  async saveMcp() {
+    try {
+      await fetch('/api/save-mcp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(this.mcpConfig)
+      });
+    } catch (e) {
+      console.error('Failed to save MCP config:', e);
+    }
+  }
+
   getItemByPath(path: string): AgentItem | null {
     if (!path) return null;
     const parts = path.split('/');

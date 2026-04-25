@@ -30,7 +30,7 @@ export class RegistryController {
     this.agentView = new AgentView('agent-view', this.handleSelect.bind(this));
     this.fileView = new FileView('file-view');
     this.modalView = new ModalView(this.handleModalConfirm.bind(this));
-    this.mcpView = new McpView(this.handleMcpSave.bind(this));
+    this.mcpView = new McpView(this.handleMcpSave.bind(this), this.handleMcpRemove.bind(this));
 
     this.setupEventListeners();
     this.model.onDataChange(this.updateUI.bind(this));
@@ -241,9 +241,16 @@ export class RegistryController {
     this.model.save();
   }
 
-  private handleMcpSave(config: any) {
-    // In a real app, this would send a POST to /api/save-mcp
-    console.log('Saving MCP Config:', config);
+  private handleMcpSave(data: { name: string, command: string, args: string[] }) {
+    this.model.addMcpServer(data.name, { command: data.command, args: data.args });
+    this.model.saveMcp();
+    alert(`MCP Server "${data.name}" added successfully.`);
+  }
+
+  private handleMcpRemove(name: string) {
+    this.model.removeMcpServer(name);
+    this.model.saveMcp();
+    this.mcpView.show(this.model.getMcpConfig());
   }
 
   private setupEventListeners() {
@@ -352,6 +359,17 @@ export class RegistryController {
         this.model.updateItem(this.currentPath, { content });
         this.model.save();
       }
+    });
+
+    document.getElementById('export-btn')?.addEventListener('click', () => {
+      if (!this.currentItem) return;
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.currentItem, null, 2));
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", `${this.currentItem.name.toLowerCase().replace(/\s+/g, '_')}_config.json`);
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
     });
   }
 }
