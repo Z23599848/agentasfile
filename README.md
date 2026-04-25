@@ -1,6 +1,16 @@
 # AgentRegistry 2026
 
-![Agent Registry UI](https://github.com/Z23599848/agentasfile/raw/master/src/assets/hero.png)
+![Dashboard](src/assets/dashboard.png)
+
+*The 2026 Premium Dashboard with Strategic Information Density.*
+
+![Agent Capabilities](src/assets/agent_view.png)
+
+*Agent-specific MCP Capabilities and Property Management.*
+
+![MCP Settings](src/assets/mcp_settings.png)
+
+*Global MCP Server Configuration and Management.*
 
 **AgentRegistry 2026** is a high-performance, autonomous multi-agent management system built with a focus on "Invisible AI" principles and "Strategic Density" design. It behaves like a hierarchical folder system where every folder is a smart agent (assistant) and every file is a context or configuration.
 
