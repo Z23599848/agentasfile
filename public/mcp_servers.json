@@ -14,6 +14,16 @@
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "description": "Manage repositories, issues, and PRs."
+    },
+    "whisper": {
+      "command": "npx",
+      "args": ["-y", "fast-whisper-mcp-server"],
+      "description": "High-performance local speech-to-text."
+    },
+    "gemma": {
+      "command": "npx",
+      "args": ["-y", "ollama-mcp-server"],
+      "description": "Connect to local Gemma models via Ollama."
     }
   }
 }
