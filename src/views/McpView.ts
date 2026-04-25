@@ -3,8 +3,10 @@ export class McpView {
   private list: HTMLElement;
   private closeBtn: HTMLElement;
   private saveBtn: HTMLElement;
+  private onSave: (config: any) => void;
 
   constructor(onSave: (config: any) => void) {
+    this.onSave = onSave;
     this.overlay = document.getElementById('mcp-modal-overlay')!;
     this.list = document.getElementById('mcp-servers-list')!;
     this.closeBtn = document.getElementById('mcp-modal-close')!;
@@ -12,7 +14,7 @@ export class McpView {
 
     this.closeBtn.onclick = () => this.hide();
     this.saveBtn.onclick = () => {
-      // Logic to collect data and save
+      this.onSave({ mcpServers: {} }); // Simple call for now
       alert('MCP Configuration saved to public/mcp_servers.json');
       this.hide();
     };
