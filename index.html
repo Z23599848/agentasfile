@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Registry - Explorer 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <aside id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">AgentRegistry 2026</div>
+          <div class="sidebar-actions">
+            <button id="add-agent-btn" title="New Agent (N)">📁+</button>
+            <button id="add-file-btn" title="New File (F)">📄+</button>
+          </div>
+        </div>
+        <div class="sidebar-search">
+          <input id="sidebar-search-input" type="text" placeholder="Filter...">
+        </div>
+        <div id="tree-view"></div>
+        <div class="sidebar-footer">
+          <div class="recent-items">
+            <h3>Recent</h3>
+            <div id="recent-list"></div>
+          </div>
+        </div>
+      </aside>
+      <main id="content">
+        <div class="page-cover" id="page-cover"></div>
+        <header id="content-header">
+          <div id="breadcrumb">Root</div>
+          <div class="actions">
+            <button id="search-btn" title="Command Palette (Ctrl+K)">🔍 Search</button>
+            <button id="edit-btn">Edit</button>
+            <button class="danger" id="delete-btn">Delete</button>
+            <button id="toggle-sidebar">Hide</button>
+          </div>
+        </header>
+        <section id="details">
+          <div id="welcome-message">
+            <div class="page-icon-container">📝</div>
+            <h1>Welcome to Agent Registry</h1>
+            <p class="muted">Press <kbd>Ctrl + K</kbd> to search or trigger commands.</p>
+          </div>
+          <div class="hidden" id="agent-view">
+            <div class="page-header-block">
+              <div class="page-icon-container" id="agent-icon">📁</div>
+              <div class="page-title-group">
+                <h1 id="agent-name">Agent Name</h1>
+                <div class="badge" id="agent-type">Folder</div>
+              </div>
+            </div>
+            <div class="content-grid">
+              <div class="main-col">
+                <div class="agent-properties">
+                  <h3 class="section-label">Basic Info</h3>
+                  <div class="properties-grid" id="properties-list"></div>
+                </div>
+                <div class="agent-children">
+                  <h3 class="section-label">Sub-agents & Items</h3>
+                  <div id="children-grid"></div>
+                </div>
+              </div>
+              <aside class="side-col">
+                <div class="quick-actions">
+                  <h3>Actions</h3>
+                  <button id="quick-add-btn">+ Add Sub-item</button>
+                  <button id="export-btn">📤 Export Config</button>
+                </div>
+              </aside>
+            </div>
+          </div>
+          <div class="hidden" id="file-view">
+            <div class="page-icon-container" id="file-icon">📄</div>
+            <h1 id="file-name">File Name</h1>
+            <div class="file-header">
+              <button class="hidden" id="save-file-btn">Save Changes</button>
+            </div>
+            <textarea class="hidden" id="file-editor" spellcheck="false"></textarea>
+            <pre id="file-content"></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+    <!-- Command Palette-->
+    <div class="hidden" id="command-palette">
+      <div class="palette-overlay">
+        <div class="palette-box">
+          <input id="palette-input" type="text" placeholder="Search agents or type a command..." autocomplete="off">
+          <div id="palette-results"></div>
+          <div class="palette-footer"><span><kbd>↑↓</kbd> Navigate</span><span><kbd>↵</kbd> Select</span><span><kbd>Esc</kbd> Close</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Modals-->
+    <div class="hidden" id="modal-overlay">
+      <div class="modal">
+        <h2 id="modal-title">New Item</h2>
+        <div class="modal-body">
+          <input id="item-name-input" type="text" placeholder="Page Title">
+          <div class="hidden" id="agent-props-editor">
+            <label>Properties (JSON)</label>
+            <textarea id="item-props-input" placeholder="{&quot;role&quot;: &quot;...&quot;}"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="modal-cancel">Cancel</button>
+          <button class="primary" id="modal-confirm">Done</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+{
+  "root": {
+    "name": "Root Assistant",
+    "type": "folder",
+    "properties": {
+      "role": "Orchestrator",
+      "tools": [
+        "RegistryManager",
+        "AuditLogger"
+      ],
+      "secrets": [
+        "ROOT_KEY"
+      ],
+      "behavior": "Manage sub-agents and delegate tasks."
+    },
+    "children": {
+      "CEO": {
+        "name": "CEO Agent",
+        "type": "folder",
+        "properties": {
+          "role": "Strategic Leader",
+          "tools": [
+            "PlanningTool"
+          ],
+          "behavior": "High-level planning and decision making."
+        },
+        "children": {
+          "Operations": {
+            "name": "Ops Sub-Agent",
+            "type": "folder",
+            "properties": {
+              "role": "Ops Manager"
+            }
+          },
+          "functions": {
+            "name": "functions",
+            "type": "file",
+            "content": ""
+          }
+        }
+      },
+      "CTO": {
+        "name": "CTO Agent",
+        "type": "folder",
+        "properties": {
+          "role": "Tech Visionary",
+          "tools": [
+            "CodeReviewer"
+          ],
+          "behavior": "Oversee technical implementation."
+        }
+      },
+      "CFO": {
+        "name": "CFO Agent",
+        "type": "folder",
+        "properties": {
+          "role": "Financial Officer",
+          "tools": [
+            "BudgetTracker"
+          ],
+          "behavior": "Manage resources and auditing."
+        }
+      },
+      "hr_manager": {
+        "name": "HR Manager",
+        "type": "folder",
+        "properties": {
+          "role": "Human Resources",
+          "tools": [],
+          "behavior": ""
+        },
+        "children": {}
+      },
+      "config.txt": {
+        "name": "config.txt",
+        "type": "file",
+        "content": "Registry configuration: v1.0.0\nMode: Autonomous"
+      },
+      "readme.md": {
+        "name": "readme.md",
+        "type": "file",
+        "content": "# Root Agent\nThis is the primary interface for the Agent Registry.\n\n\nff\n"
+      },
+      "kk": {
+        "name": "kk",
+        "type": "file",
+        "content": "ll\n\n"
+      },
+      "tester_agent": {
+        "name": "Tester Agent",
+        "type": "folder",
+        "properties": {
+          "role": "Assistant",
+          "tools": [],
+          "behavior": ""
+        },
+        "children": {}
+      }
+    }
+  }
+}

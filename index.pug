@@ -1,0 +1,98 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    link(rel="icon", type="image/svg+xml", href="/vite.svg")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Agent Registry - Explorer 2026
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700&display=swap", rel="stylesheet")
+  body
+    #app
+      aside#sidebar
+        .sidebar-header
+          .logo AgentRegistry 2026
+          .sidebar-actions
+            button#add-agent-btn(title="New Agent (N)") 📁+
+            button#add-file-btn(title="New File (F)") 📄+
+        .sidebar-search
+          input#sidebar-search-input(type="text", placeholder="Filter...")
+        #tree-view
+        .sidebar-footer
+          .recent-items
+            h3 Recent
+            #recent-list
+      
+      main#content
+        #page-cover.page-cover
+        header#content-header
+          #breadcrumb Root
+          .actions
+            button#search-btn(title="Command Palette (Ctrl+K)") 🔍 Search
+            button#edit-btn Edit
+            button#delete-btn.danger Delete
+            button#toggle-sidebar Hide
+        
+        section#details
+          #welcome-message
+            .page-icon-container 📝
+            h1 Welcome to Agent Registry
+            p.muted Press #[kbd Ctrl + K] to search or trigger commands.
+          
+          #agent-view.hidden
+            .page-header-block
+              #agent-icon.page-icon-container 📁
+              .page-title-group
+                h1#agent-name Agent Name
+                #agent-type.badge Folder
+            
+            .content-grid
+              .main-col
+                .agent-properties
+                  h3.section-label Basic Info
+                  #properties-list.properties-grid
+                
+                .agent-children
+                  h3.section-label Sub-agents & Items
+                  #children-grid
+              
+              aside.side-col
+                .quick-actions
+                  h3 Actions
+                  button#quick-add-btn + Add Sub-item
+                  button#export-btn 📤 Export Config
+          
+          #file-view.hidden
+            #file-icon.page-icon-container 📄
+            h1#file-name File Name
+            .file-header
+              button#save-file-btn.hidden Save Changes
+            textarea#file-editor.hidden(spellcheck="false")
+            pre#file-content
+    
+    // Command Palette
+    #command-palette.hidden
+      .palette-overlay
+        .palette-box
+          input#palette-input(type="text", placeholder="Search agents or type a command...", autocomplete="off")
+          #palette-results
+          .palette-footer
+            span #[kbd ↑↓] Navigate
+            span #[kbd ↵] Select
+            span #[kbd Esc] Close
+
+    // Modals
+    #modal-overlay.hidden
+      .modal
+        h2#modal-title New Item
+        .modal-body
+          input#item-name-input(type="text", placeholder="Page Title")
+          #agent-props-editor.hidden
+            label Properties (JSON)
+            textarea#item-props-input(placeholder='{"role": "..."}')
+        .modal-footer
+          button#modal-cancel Cancel
+          button#modal-confirm.primary Done
+    
+    script(type="module", src="/src/main.ts")
