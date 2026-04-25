@@ -24,6 +24,9 @@
         </div>
         <div id="tree-view"></div>
         <div class="sidebar-footer">
+          <div class="sidebar-nav">
+            <button id="mcp-settings-btn" title="MCP Settings">🔌 MCP Servers</button>
+          </div>
           <div class="recent-items">
             <h3>Recent</h3>
             <div id="recent-list"></div>
@@ -60,6 +63,10 @@
                 <div class="agent-properties">
                   <h3 class="section-label">Basic Info</h3>
                   <div class="properties-grid" id="properties-list"></div>
+                </div>
+                <div class="agent-capabilities">
+                  <h3 class="section-label">MCP Capabilities</h3>
+                  <div class="capabilities-grid" id="capabilities-grid"></div>
                 </div>
                 <div class="agent-children">
                   <h3 class="section-label">Sub-agents & Items</h3>
@@ -111,6 +118,25 @@
         <div class="modal-footer">
           <button id="modal-cancel">Cancel</button>
           <button class="primary" id="modal-confirm">Done</button>
+        </div>
+      </div>
+    </div>
+    <!-- MCP Settings Modal-->
+    <div class="hidden" id="mcp-modal-overlay">
+      <div class="modal">
+        <h2>MCP Servers Configuration</h2>
+        <div class="modal-body">
+          <div id="mcp-servers-list"></div>
+          <div class="mcp-add-section">
+            <h3>Add New Server</h3>
+            <input id="new-mcp-name" type="text" placeholder="Server Name (e.g., weather)">
+            <input id="new-mcp-command" type="text" placeholder="Command (e.g., npx)">
+            <input id="new-mcp-args" type="text" placeholder="Args (comma separated)">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="mcp-modal-close">Close</button>
+          <button class="primary" id="mcp-modal-save">Save Config</button>
         </div>
       </div>
     </div>

@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "description": "Browser automation and inspection tools."
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
+      "description": "Safe access to the local filesystem."
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "description": "Manage repositories, issues, and PRs."
+    }
+  }
+}

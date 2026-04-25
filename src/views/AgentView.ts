@@ -29,6 +29,7 @@ export class AgentView {
     }
 
     const childrenGrid = document.getElementById('children-grid')!;
+    this.renderCapabilities(agent);
     childrenGrid.innerHTML = '';
     if (agent.children) {
       Object.entries(agent.children).forEach(([childId, childItem]) => {
@@ -46,6 +47,27 @@ export class AgentView {
 
   hide() {
     this.container.classList.add('hidden');
+  }
+
+  private renderCapabilities(agent: AgentItem) {
+    const grid = document.getElementById('capabilities-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const servers = agent.properties?.mcp_servers || [];
+    servers.forEach(server => {
+      const card = document.createElement('div');
+      card.className = 'capability-card active';
+      card.innerHTML = `
+        <div class="name">🔌 ${server}</div>
+        <div class="desc">Agent has access to this capability.</div>
+      `;
+      grid.appendChild(card);
+    });
+
+    if (servers.length === 0) {
+      grid.innerHTML = '<p class="muted" style="grid-column: 1/-1">No specialized capabilities assigned.</p>';
+    }
   }
 
   private getIconForKey(key: string): string {

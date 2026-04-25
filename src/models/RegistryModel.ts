@@ -2,6 +2,7 @@ import type { AgentRegistry, AgentItem } from '../types';
 
 export class RegistryModel {
   private data: AgentRegistry = {};
+  private mcpConfig: any = { mcpServers: {} };
   private onDataChangeCallbacks: (() => void)[] = [];
 
   constructor() {}
@@ -10,6 +11,8 @@ export class RegistryModel {
     try {
       const res = await fetch('/public/registry.json');
       this.data = await res.json();
+      const mcpRes = await fetch('/public/mcp_servers.json');
+      this.mcpConfig = await mcpRes.json();
       this.notify();
     } catch (e) {
       console.error('Failed to load registry:', e);
@@ -26,8 +29,12 @@ export class RegistryModel {
     }
   }
 
-  getData() {
+  getData(): AgentRegistry {
     return this.data;
+  }
+
+  getMcpConfig(): any {
+    return this.mcpConfig;
   }
 
   getItemByPath(path: string): AgentItem | null {

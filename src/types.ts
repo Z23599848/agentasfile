@@ -6,6 +6,7 @@ export interface AgentItem {
     tools?: string[];
     secrets?: string[];
     behavior?: string;
+    mcp_servers?: string[];
     [key: string]: any;
   };
   children?: {

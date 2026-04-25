@@ -12,6 +12,8 @@
 - **Pug Templates**: Clean, semantic templating for high-performance rendering.
 - **Hierarchical Persistence**: Automatically nests agents under the `root` orchestrator, preserving context and discovery.
 - **Dynamic Dashboards**: Auto-generated property cards (role, tools, secrets, behavior) for every agent.
+- **MCP Integration**: Connect your agents to the **Model Context Protocol**. Assign capabilities like Filesystem, GitHub, or Browser automation to specific agents.
+- **Global MCP Manager**: Centralized management for all your MCP server configurations.
 
 ## 🚀 Quick Start
 

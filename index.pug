@@ -20,6 +20,8 @@ html(lang="en")
           input#sidebar-search-input(type="text", placeholder="Filter...")
         #tree-view
         .sidebar-footer
+          .sidebar-nav
+            button#mcp-settings-btn(title="MCP Settings") 🔌 MCP Servers
           .recent-items
             h3 Recent
             #recent-list
@@ -52,6 +54,10 @@ html(lang="en")
                 .agent-properties
                   h3.section-label Basic Info
                   #properties-list.properties-grid
+                
+                .agent-capabilities
+                  h3.section-label MCP Capabilities
+                  #capabilities-grid.capabilities-grid
                 
                 .agent-children
                   h3.section-label Sub-agents & Items
@@ -94,5 +100,20 @@ html(lang="en")
         .modal-footer
           button#modal-cancel Cancel
           button#modal-confirm.primary Done
+    
+    // MCP Settings Modal
+    #mcp-modal-overlay.hidden
+      .modal
+        h2 MCP Servers Configuration
+        .modal-body
+          #mcp-servers-list
+          .mcp-add-section
+            h3 Add New Server
+            input#new-mcp-name(type="text", placeholder="Server Name (e.g., weather)")
+            input#new-mcp-command(type="text", placeholder="Command (e.g., npx)")
+            input#new-mcp-args(type="text", placeholder="Args (comma separated)")
+        .modal-footer
+          button#mcp-modal-close Close
+          button#mcp-modal-save.primary Save Config
     
     script(type="module", src="/src/main.ts")

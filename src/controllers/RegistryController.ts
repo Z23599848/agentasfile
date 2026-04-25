@@ -3,6 +3,7 @@ import { TreeView } from '../views/TreeView';
 import { AgentView } from '../views/AgentView';
 import { FileView } from '../views/FileView';
 import { ModalView } from '../views/ModalView';
+import { McpView } from '../views/McpView';
 import type { AgentItem, ModalMode } from '../types';
 
 export class RegistryController {
@@ -11,6 +12,7 @@ export class RegistryController {
   private agentView: AgentView;
   private fileView: FileView;
   private modalView: ModalView;
+  private mcpView: McpView;
 
   private currentPath: string | null = null;
   private currentItem: AgentItem | null = null;
@@ -28,6 +30,7 @@ export class RegistryController {
     this.agentView = new AgentView('agent-view', this.handleSelect.bind(this));
     this.fileView = new FileView('file-view');
     this.modalView = new ModalView(this.handleModalConfirm.bind(this));
+    this.mcpView = new McpView(this.handleMcpSave.bind(this));
 
     this.setupEventListeners();
     this.model.onDataChange(this.updateUI.bind(this));
@@ -238,6 +241,11 @@ export class RegistryController {
     this.model.save();
   }
 
+  private handleMcpSave(config: any) {
+    // In a real app, this would send a POST to /api/save-mcp
+    console.log('Saving MCP Config:', config);
+  }
+
   private setupEventListeners() {
     window.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -247,6 +255,7 @@ export class RegistryController {
       if (e.key === 'Escape') {
         this.togglePalette(false);
         this.modalView.hide();
+        this.mcpView.hide();
       }
       if (this.paletteOpen) {
         if (e.key === 'ArrowDown') {
@@ -285,6 +294,10 @@ export class RegistryController {
         });
       });
     }
+
+    document.getElementById('mcp-settings-btn')?.addEventListener('click', () => {
+      this.mcpView.show(this.model.getMcpConfig());
+    });
 
     document.getElementById('search-btn')?.addEventListener('click', () => this.togglePalette(true));
     document.getElementById('toggle-sidebar')?.addEventListener('click', () => {

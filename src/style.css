@@ -615,7 +615,63 @@ kbd {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.capability-card {
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.capability-card.active {
+  border-color: var(--accent-color);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.capability-card .name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.capability-card .desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.sidebar-nav {
+  margin-bottom: 1.5rem;
+}
+
+#mcp-settings-btn {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  color: white;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#mcp-settings-btn:hover {
+  border-color: var(--accent-color);
+}
+
 .hidden { display: none !important; }
+
 
 
 /* Responsive */

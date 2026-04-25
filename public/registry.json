@@ -22,7 +22,8 @@
           "tools": [
             "PlanningTool"
           ],
-          "behavior": "High-level planning and decision making."
+          "behavior": "High-level planning and decision making.",
+          "mcp_servers": ["github", "chrome-devtools"]
         },
         "children": {
           "Operations": {
@@ -47,7 +48,8 @@
           "tools": [
             "CodeReviewer"
           ],
-          "behavior": "Oversee technical implementation."
+          "behavior": "Oversee technical implementation.",
+          "mcp_servers": ["filesystem"]
         }
       },
       "CFO": {
