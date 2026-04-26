@@ -11,6 +11,7 @@ AgentRegistry is a Vite and TypeScript application for browsing, editing, and ch
 - Hierarchical agent/file explorer backed by `public/registry.json`.
 - Agent detail dashboards with properties, child items, and MCP capabilities.
 - Per-agent chat history persisted with the registry.
+- In-browser speech-to-text for chat using `onnx-community/whisper-tiny.en`.
 - Command palette with `Ctrl + K`, keyboard navigation, and recent items.
 - File editing with persisted saves.
 - MCP server manager backed by `public/mcp_servers.json`.
@@ -69,3 +70,7 @@ docker run -p 3000:3000 agent-registry
 ## Persistence
 
 During development, the Vite plugin in `vite.config.ts` writes changes to `public/registry.json` and `public/mcp_servers.json`. In production, `server.js` writes the same files. For container deployments, mount `public/` as a volume if you want changes to survive rebuilds.
+
+## Browser Speech
+
+Chat voice input runs locally in the browser through `@huggingface/transformers`. The model is loaded lazily on first use, so the initial app load stays small. WebGPU is preferred when available; otherwise the app falls back to the WASM backend.

@@ -84,8 +84,9 @@ html(lang="en")
               #chat-messages.chat-messages
 
               .chat-input-area
+                #chat-speech-status.chat-speech-status.hidden
                 .chat-input-wrapper
-                  button#chat-attach-btn(type="button", title="Attach", aria-label="Attach") 📎
+                  button#chat-voice-btn(type="button", title="Record voice", aria-label="Record voice") Mic
                   input#chat-input(type="text", placeholder="Message...", autocomplete="off")
                   button#chat-send-btn(type="button", title="Send", aria-label="Send") ➔
 

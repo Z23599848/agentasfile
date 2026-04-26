@@ -887,6 +887,13 @@ kbd {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.chat-speech-status {
+  min-height: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
 .chat-input-wrapper {
   display: flex;
   align-items: center;
@@ -923,6 +930,10 @@ kbd {
 
 .chat-input-wrapper button:hover {
   color: var(--accent-color);
+}
+
+#chat-voice-btn.recording {
+  color: #ef4444;
 }
 
 #chat-send-btn {

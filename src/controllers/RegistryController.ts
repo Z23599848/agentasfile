@@ -5,6 +5,7 @@ import { FileView } from '../views/FileView';
 import { ModalView } from '../views/ModalView';
 import { McpView } from '../views/McpView';
 import { ChatView } from '../views/ChatView';
+import { BrowserWhisperTranscriber } from '../services/BrowserWhisperTranscriber';
 import type { AgentItem, ModalMode } from '../types';
 
 type RegistrySearchResult = { path: string; item: AgentItem };
@@ -17,6 +18,7 @@ export class RegistryController {
   private modalView: ModalView;
   private mcpView: McpView;
   private chatView: ChatView;
+  private transcriber: BrowserWhisperTranscriber;
 
   private currentPath: string | null = null;
   private currentItem: AgentItem | null = null;
@@ -36,7 +38,11 @@ export class RegistryController {
     this.fileView = new FileView('file-view');
     this.modalView = new ModalView(this.handleModalConfirm.bind(this));
     this.mcpView = new McpView(this.handleMcpSave.bind(this), this.handleMcpRemove.bind(this));
-    this.chatView = new ChatView(this.handleSendMessage.bind(this));
+    this.transcriber = new BrowserWhisperTranscriber();
+    this.chatView = new ChatView(
+      this.handleSendMessage.bind(this),
+      this.handleTranscribeAudio.bind(this)
+    );
 
     this.setupEventListeners();
     this.model.onDataChange(this.updateUI.bind(this));
@@ -354,6 +360,10 @@ export class RegistryController {
     this.model.addChatMessage(path, { sender: 'user', text });
     void this.model.save();
     void this.simulateAgentResponse(path, item);
+  }
+
+  private async handleTranscribeAudio(audio: Blob): Promise<string> {
+    return this.transcriber.transcribe(audio);
   }
 
   private async simulateAgentResponse(path: string, item: AgentItem) {
