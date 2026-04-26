@@ -28,7 +28,7 @@ export class TreeView {
     const toggle = document.createElement('span');
     toggle.className = 'folder-toggle';
     if (item.type === 'folder' && item.children && Object.keys(item.children).length > 0) {
-      toggle.innerHTML = '▶';
+      toggle.textContent = '▶';
       toggle.onclick = (e) => {
         e.stopPropagation();
         const childrenList = itemContainer.querySelector('.tree-children');
@@ -42,11 +42,11 @@ export class TreeView {
 
     const icon = document.createElement('span');
     icon.className = 'tree-item-icon';
-    icon.innerHTML = item.type === 'folder' ? '📁' : '📄';
+    icon.textContent = item.type === 'folder' ? '📁' : '📄';
     itemEl.appendChild(icon);
 
     const name = document.createElement('span');
-    name.innerText = item.name;
+    name.textContent = item.name;
     itemEl.appendChild(name);
 
     itemEl.onclick = () => this.onSelect(fullPath, item);

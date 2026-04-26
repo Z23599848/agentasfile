@@ -2,78 +2,70 @@
 
 ![Dashboard](src/assets/dashboard.png)
 
-*The 2026 Premium Dashboard with Strategic Information Density.*
+AgentRegistry is a Vite and TypeScript application for browsing, editing, and chatting with a hierarchical registry of agents and context files.
 
 ![Agent Capabilities](src/assets/agent_view.png)
 
-*Agent-specific MCP Capabilities and Property Management.*
+## Features
 
-![MCP Settings](src/assets/mcp_settings.png)
+- Hierarchical agent/file explorer backed by `public/registry.json`.
+- Agent detail dashboards with properties, child items, and MCP capabilities.
+- Per-agent chat history persisted with the registry.
+- Command palette with `Ctrl + K`, keyboard navigation, and recent items.
+- File editing with persisted saves.
+- MCP server manager backed by `public/mcp_servers.json`.
+- Dev and production save APIs for registry and MCP configuration.
 
-*Global MCP Server Configuration and Management.*
+## Quick Start
 
-**AgentRegistry 2026** is a high-performance, autonomous multi-agent management system built with a focus on "Invisible AI" principles and "Strategic Density" design. It behaves like a hierarchical folder system where every folder is a smart agent (assistant) and every file is a context or configuration.
+### Local Development
 
-## ✨ Features
+```bash
+npm install
+npm run dev
+```
 
-- **2026 Premium UI**: Notion-inspired aesthetics with glassmorphism, fluid animations, and a focus on visual hierarchy.
-- **Command Palette (`Ctrl + K`)**: Rapidly search, navigate, and trigger actions across your entire agent network.
-- **MVC Architecture**: Robust separation of concerns (Model-View-Controller) for scalability and ease of extension.
-- **Pug Templates**: Clean, semantic templating for high-performance rendering.
-- **Hierarchical Persistence**: Automatically nests agents under the `root` orchestrator, preserving context and discovery.
-- **Dynamic Dashboards**: Auto-generated property cards (role, tools, secrets, behavior) for every agent.
-- **MCP Integration**: Connect your agents to the **Model Context Protocol**. Assign capabilities like Filesystem, GitHub, or Browser automation to specific agents.
-- **Global MCP Manager**: Centralized management for all your MCP server configurations.
+Then visit the local URL printed by Vite.
 
-## 🚀 Quick Start
+### Production Build
 
-### Using Docker (Recommended)
+```bash
+npm run build
+node server.js
+```
 
-Run the entire system with a single command:
+The production server serves the built app from `dist/`, reads live data from `public/`, and exposes:
+
+- `POST /api/save`
+- `POST /api/save-mcp`
+- `GET /registry.json`
+- `GET /mcp_servers.json`
+
+### Docker
 
 ```bash
 docker build -t agent-registry .
 docker run -p 3000:3000 agent-registry
 ```
 
-Then visit [http://localhost:3000](http://localhost:3000)
+## Keyboard Shortcuts
 
-### Local Development
+- `Ctrl + K`: open command palette
+- `N`: new agent in the selected folder, or root if no folder is selected
+- `F`: new file in the selected folder, or root if no folder is selected
+- `Esc`: close modals or palette
+- `Up` / `Down`: navigate palette results
+- `Enter`: select the active palette result
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+## Project Structure
 
-2. **Start Dev Server**:
-   ```bash
-   npm run dev
-   ```
+- `src/models`: data loading, lookup, mutation, and save logic
+- `src/views`: DOM rendering components
+- `src/controllers`: app state and event orchestration
+- `public`: editable JSON data files and static assets
+- `index.pug`: source template for `index.html`
+- `server.js`: production server and save API
 
-3. **Build for Production**:
-   ```bash
-   npm run build
-   ```
+## Persistence
 
-## ⌨️ Keyboard Shortcuts
-
-- **`Ctrl + K`**: Open Command Palette
-- **`N`**: New Agent (in current folder)
-- **`F`**: New File (in current folder)
-- **`Esc`**: Close modals or palette
-- **`↑ / ↓`**: Navigate palette results
-
-## 📂 Project Structure
-
-- `/src/models`: Data handling and persistence logic.
-- `/src/views`: UI rendering components (AgentView, FileView, TreeView).
-- `/src/controllers`: Event handling and state management.
-- `/public`: Static assets and the `registry.json` database.
-- `index.pug`: Main application template.
-
-## 🛠️ Configuration
-
-The system persists its state to `public/registry.json`. In a production environment, you may want to mount this file as a volume to ensure data persistence across container restarts.
-
----
-Built with ❤️ for the future of Autonomous Multi-Agent Organizations.
+During development, the Vite plugin in `vite.config.ts` writes changes to `public/registry.json` and `public/mcp_servers.json`. In production, `server.js` writes the same files. For container deployments, mount `public/` as a volume if you want changes to survive rebuilds.

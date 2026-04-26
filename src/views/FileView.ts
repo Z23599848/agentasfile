@@ -4,19 +4,19 @@ export class FileView {
   private container: HTMLElement;
   private editor: HTMLTextAreaElement;
   private content: HTMLElement;
-  private saveBtn: HTMLElement;
+  private saveBtn: HTMLButtonElement;
 
   constructor(containerId: string) {
     this.container = document.getElementById(containerId)!;
     this.editor = document.getElementById('file-editor') as HTMLTextAreaElement;
     this.content = document.getElementById('file-content')!;
-    this.saveBtn = document.getElementById('save-file-btn')!;
+    this.saveBtn = document.getElementById('save-file-btn') as HTMLButtonElement;
   }
 
   show(file: AgentItem) {
     this.container.classList.remove('hidden');
-    document.getElementById('file-name')!.innerText = file.name;
-    this.content.innerText = file.content || 'Empty file.';
+    document.getElementById('file-name')!.textContent = file.name;
+    this.content.textContent = file.content || 'Empty file.';
     this.content.classList.remove('hidden');
     this.editor.classList.add('hidden');
     this.saveBtn.classList.add('hidden');

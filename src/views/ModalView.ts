@@ -37,14 +37,14 @@ export class ModalView {
     this.propsInput.value = initialData?.props || '';
 
     if (mode === 'add-folder') {
-      this.title.innerText = 'New Agent';
+      this.title.textContent = 'New Agent';
       this.propsEditor.classList.remove('hidden');
       if (!initialData) this.propsInput.value = '{\n  "role": "Assistant",\n  "tools": [],\n  "behavior": ""\n}';
     } else if (mode === 'add-file') {
-      this.title.innerText = 'New File';
+      this.title.textContent = 'New File';
       this.propsEditor.classList.add('hidden');
     } else if (mode === 'edit-agent') {
-      this.title.innerText = 'Edit Properties';
+      this.title.textContent = 'Edit Properties';
       this.propsEditor.classList.remove('hidden');
     }
     this.nameInput.focus();

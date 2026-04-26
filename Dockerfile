@@ -7,13 +7,10 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies (including dev deps for build)
-RUN npm install --legacy-peer-deps
+RUN npm ci
 
 # Copy source
 COPY . .
-
-# Compile Pug to HTML (required for build)
-RUN node compile-pug.cjs
 
 # Build the app
 RUN npm run build
@@ -30,7 +27,7 @@ COPY --from=builder /app/server.js ./server.js
 COPY --from=builder /app/package*.json ./
 
 # Install only production dependencies
-RUN npm install --omit=dev --legacy-peer-deps
+RUN npm ci --omit=dev
 
 EXPOSE 3000
 

@@ -1,8 +1,13 @@
+import type { McpConfig, McpServerConfig } from '../types';
+
 export class McpView {
   private overlay: HTMLElement;
   private list: HTMLElement;
   private closeBtn: HTMLElement;
   private saveBtn: HTMLElement;
+  private nameInput: HTMLInputElement;
+  private commandInput: HTMLInputElement;
+  private argsInput: HTMLInputElement;
   private onSave: (data: { name: string, command: string, args: string[] }) => void;
   private onRemove: (name: string) => void;
 
@@ -16,65 +21,89 @@ export class McpView {
     this.list = document.getElementById('mcp-servers-list')!;
     this.closeBtn = document.getElementById('mcp-modal-close')!;
     this.saveBtn = document.getElementById('mcp-modal-save')!;
+    this.nameInput = document.getElementById('new-mcp-name') as HTMLInputElement;
+    this.commandInput = document.getElementById('new-mcp-command') as HTMLInputElement;
+    this.argsInput = document.getElementById('new-mcp-args') as HTMLInputElement;
 
     this.closeBtn.onclick = () => this.hide();
-    this.saveBtn.onclick = () => {
-      const name = (document.getElementById('new-mcp-name') as HTMLInputElement).value;
-      const command = (document.getElementById('new-mcp-command') as HTMLInputElement).value;
-      const argsStr = (document.getElementById('new-mcp-args') as HTMLInputElement).value;
-
-      if (name && command) {
-        const args = argsStr.split(',').map(a => a.trim()).filter(a => a);
-        this.onSave({ name, command, args });
-        (document.getElementById('new-mcp-name') as HTMLInputElement).value = '';
-        (document.getElementById('new-mcp-command') as HTMLInputElement).value = '';
-        (document.getElementById('new-mcp-args') as HTMLInputElement).value = '';
-        this.hide();
-      } else {
-        alert('Please provide at least a name and a command.');
-      }
+    this.saveBtn.onclick = () => this.handleSave();
+    this.overlay.onclick = (e) => {
+      if (e.target === this.overlay) this.hide();
     };
   }
 
-  show(config: any) {
+  show(config: McpConfig) {
     this.overlay.classList.remove('hidden');
     this.renderServers(config.mcpServers || {});
+    this.nameInput.focus();
   }
 
   hide() {
     this.overlay.classList.add('hidden');
   }
 
-  private renderServers(servers: any) {
-    this.list.innerHTML = '';
-    Object.entries(servers).forEach(([name, info]: [string, any]) => {
+  private handleSave() {
+    const name = this.nameInput.value.trim();
+    const command = this.commandInput.value.trim();
+    const args = this.argsInput.value
+      .split(',')
+      .map(arg => arg.trim())
+      .filter(Boolean);
+
+    if (!name || !command) {
+      alert('Please provide at least a name and a command.');
+      return;
+    }
+
+    this.onSave({ name, command, args });
+    this.nameInput.value = '';
+    this.commandInput.value = '';
+    this.argsInput.value = '';
+    this.hide();
+  }
+
+  private renderServers(servers: Record<string, McpServerConfig>) {
+    this.list.replaceChildren();
+
+    const entries = Object.entries(servers);
+    if (entries.length === 0) {
+      const empty = document.createElement('p');
+      empty.className = 'muted';
+      empty.textContent = 'No MCP servers configured.';
+      this.list.appendChild(empty);
+      return;
+    }
+
+    entries.forEach(([name, info]) => {
       const item = document.createElement('div');
       item.className = 'mcp-server-item';
-      item.style.marginBottom = '1rem';
-      item.style.padding = '1rem';
-      item.style.background = 'var(--hover-bg)';
-      item.style.borderRadius = '10px';
-      item.style.border = '1px solid var(--border-color)';
-      
-      item.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong style="color: var(--accent-color)">${name}</strong>
-          <button class="danger remove-btn" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Remove</button>
-        </div>
-        <div class="muted" style="font-size: 0.8rem; margin-top: 0.5rem;">
-          <code>${info.command} ${info.args.join(' ')}</code>
-        </div>
-      `;
-      item.querySelector('.remove-btn')?.addEventListener('click', () => {
+
+      const header = document.createElement('div');
+      header.className = 'mcp-server-header';
+
+      const title = document.createElement('strong');
+      title.textContent = name;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'danger remove-btn';
+      removeBtn.textContent = 'Remove';
+      removeBtn.onclick = () => {
         if (confirm(`Remove ${name} server?`)) {
           this.onRemove(name);
         }
-      });
+      };
+
+      const command = document.createElement('code');
+      command.textContent = [info.command, ...(info.args || [])].join(' ');
+
+      const commandWrap = document.createElement('div');
+      commandWrap.className = 'muted mcp-command';
+      commandWrap.appendChild(command);
+
+      item.append(header, commandWrap);
+      header.append(title, removeBtn);
       this.list.appendChild(item);
     });
-
-    if (Object.keys(servers).length === 0) {
-      this.list.innerHTML = '<p class="muted">No MCP servers configured.</p>';
-    }
   }
 }
